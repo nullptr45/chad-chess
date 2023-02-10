@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 build/*
+=======
+build/
+node_modules/
+dist/
+>>>>>>> 78f7754daf9d08f4025f9deb0a7908c73502a144
