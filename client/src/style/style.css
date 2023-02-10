@@ -1,0 +1,48 @@
+html {
+    box-sizing: border-box;
+    font: 16px sans-serif;
+    background-color: #64a7c0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+.chess {
+    padding: 8px;
+    margin: 0 auto;
+    width: 500px;
+}
+
+.chess-board {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chess-board__info {
+    width: 100px;
+}
+
+.chess-board__text {
+    font-size: 18px;
+    color: #111;
+}
+
+.chess-board__row {
+    display: flex;
+}
+
+[class*=col-] {
+    padding: 40px;
+    border: 1px solid #080909;
+}
+
+.col-0 {
+    background-color: #c9dbe1;
+}
+
+.col-1 {
+    background-color: #0c242c;
+}

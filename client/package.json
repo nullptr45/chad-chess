@@ -4,7 +4,8 @@
   "description": "the client",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC"
