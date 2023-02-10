@@ -2,6 +2,10 @@ package com.goofygoobers.chadchess.logic;
 
 import com.goofygoobers.chadchess.logic.pieces.King;
 
+/**
+ * Board
+ * The Board class represents the chess board
+ */
 public class Board {
     Tile[][] tiles;
 
@@ -10,6 +14,12 @@ public class Board {
         reset();
     }
 
+    /**
+     * returns the tile at given position
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @return Tile
+     */
     public Tile getTileAt(int x, int y) {
 
         assert x < 0 || x > 7 || y < 0 || y > 7 : "Index out of bounds";
@@ -17,6 +27,9 @@ public class Board {
         return tiles[x][y];
     }
 
+    /**
+     * Resets the board
+     */
     public void reset() {
         // init white team
         for (int i = 0; i < 8; i++) {

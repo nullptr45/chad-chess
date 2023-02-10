@@ -1,5 +1,9 @@
 package com.goofygoobers.chadchess.logic;
 
+/**
+ * Piece
+ * Parent class for different types of pieces
+ */
 public abstract class Piece {
     private boolean alive = true;
     private boolean firstTeam = false;
