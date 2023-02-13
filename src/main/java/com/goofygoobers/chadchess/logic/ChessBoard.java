@@ -5,7 +5,7 @@ import com.goofygoobers.chadchess.logic.pieces.*;
 public class ChessBoard {
     public static final int SIZE = 8;
     private Piece[][] board = new Piece[SIZE][SIZE];
-    public int turn = 0;
+    private int turn = 0;
     private Color[] colors = {Color.WHITE, Color.BLACK};
 
     public ChessBoard() {
@@ -49,20 +49,21 @@ public class ChessBoard {
         }
     }
 
-    public boolean move(V2 start, V2 end) {
-        if(!hasPieceAt(start) || getPieceAt(start).COLOR != colors[turn % 2]) {
-            return false;
-        }
-        if(!getPieceAt(start).validateMove(start, end, this)) {
+    public boolean move(V2 start, V2 target) {
+        if(!hasPieceAt(start) || getPieceAt(start).COLOR != colors[turn % 2] || !validateMove(start, target)) {
             return false;
         }
 
         //move and maybe take piece
-        setPiece(end, getPieceAt(start));
+        setPiece(target, getPieceAt(start));
         setPiece(start, null);
 
         turn++;
         return true;
+    }
+
+    public boolean validateMove(V2 start, V2 target) {
+        return getPieceAt(start).validateMove(start, target, this);
     }
 
     private void setPiece(V2 pos, Piece piece) {
@@ -74,7 +75,7 @@ public class ChessBoard {
     }
 
     public boolean hasPieceAt(V2 pos) {
-        return board[pos.getX()][pos.getY()] != null;
+        return getPieceAt(pos) != null;
     }
 
     public boolean hasPieceInStraightRange(V2 start, V2 target) throws Exception {
