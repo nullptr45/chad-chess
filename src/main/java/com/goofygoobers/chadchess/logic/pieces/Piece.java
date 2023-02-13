@@ -16,6 +16,10 @@ public abstract class Piece {
     public abstract boolean goesStraigt();
     public abstract boolean goesDiagonally();
 
+    public boolean validateSpecial() {
+        return true;
+    }
+
     public Piece(com.goofygoobers.chadchess.logic.Color color) {
         this.COLOR = color;
     }
@@ -69,6 +73,10 @@ public abstract class Piece {
             } else {
                 isValid = isValidStraight || isValidDiagonal;
             }
+        }
+
+        if(validateSpecial()) {
+            isValid = true;
         }
 
         return isValid;
