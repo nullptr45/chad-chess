@@ -1,3 +1,5 @@
+![](facts.jpeg)
+
 # BUILD INSTRUCTIONS
 
 ## SERVER
