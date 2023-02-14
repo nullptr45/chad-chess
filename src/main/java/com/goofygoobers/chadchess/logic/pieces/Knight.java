@@ -49,10 +49,6 @@ public class Knight extends Piece{
 
     @Override
     public String toString() {
-        if(COLOR == Color.WHITE) {
-            return "♘︎";
-        } else {
-            return "♞︎";
-        }
+        return "knight";
     }
 }

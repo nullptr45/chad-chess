@@ -1,6 +1,10 @@
 package com.goofygoobers.chadchess.logic;
 
 import com.goofygoobers.chadchess.logic.pieces.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.Arrays;
 
 public class ChessBoard {
     public static final int SIZE = 8;
@@ -123,21 +127,8 @@ public class ChessBoard {
     @Override
     public String toString() {
         String string = "";
-
-        for(int y = 0; y < SIZE; y++) {
-            string += y + " [";
-            for(int x = 0; x < SIZE; x++) {
-                if(board[x][y] == null) {
-                    string += "          ";
-                } else {
-                    string += board[x][y].toString() + "   ";
-                }
-            }
-            string += "]\n";
-        }
-
-        for(int x = -1; x < SIZE; x++) {
-            string += x + "  ";
+        for(Piece[] x : board) {
+            string += Arrays.toString(x);
         }
 
         return string;

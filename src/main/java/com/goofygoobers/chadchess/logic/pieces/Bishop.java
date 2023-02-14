@@ -33,10 +33,6 @@ public class Bishop extends Piece{
 
     @Override
     public String toString() {
-        if(COLOR == Color.WHITE) {
-            return "♗︎";
-        } else {
-            return "♝︎";
-        }
+        return "bishop";
     }
 }

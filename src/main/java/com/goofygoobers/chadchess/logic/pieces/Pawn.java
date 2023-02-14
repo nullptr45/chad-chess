@@ -36,10 +36,6 @@ public class Pawn extends Piece{
 
     @Override
     public String toString() {
-        if(COLOR == Color.WHITE) {
-            return "♙︎";
-        } else {
-            return "♟︎";
-        }
+        return "pawn";
     }
 }

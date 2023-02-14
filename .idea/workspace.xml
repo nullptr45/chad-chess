@@ -5,17 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="584ccb14-87cb-4913-a9e9-c26a8c8eb4b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/goofygoobers/chadchess/PawnTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/ChessBoardWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/ChadchessApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/ChadchessApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/ChessBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/ChessBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/goofygoobers/chadchess/ChadchessApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/King.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Pawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Queen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/goofygoobers/chadchess/logic/pieces/Rook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +76,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="2LWTYYu3Wd7uQEahdtVZAxHY8W7" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
@@ -75,7 +91,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/settings.gradle" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -88,7 +106,7 @@
       <module name="chadchess.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.goofygoobers.chadchess.*" />
+          <option name="PATTERN" value="com.goofygoobers.chadchess.ChessBoardWrapper" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
