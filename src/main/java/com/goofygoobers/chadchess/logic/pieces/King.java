@@ -39,7 +39,7 @@ public class King extends Piece{
         return moves;
     }
 
-    public boolean goesStraigt() {
+    public boolean goesStraight() {
         return false;
     }
 

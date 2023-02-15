@@ -39,7 +39,7 @@ public class Knight extends Piece{
         return moves;
     }
 
-    public boolean goesStraigt() {
+    public boolean goesStraight() {
         return false;
     }
 

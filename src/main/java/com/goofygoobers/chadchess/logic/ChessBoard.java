@@ -54,8 +54,12 @@ public class ChessBoard {
     }
 
     public boolean move(V2 start, V2 target) {
-        if(!hasPieceAt(start) || getPieceAt(start).COLOR != colors[turn % 2] || !validateMove(start, target)) {
+        Piece piece = getPieceAt(start);
+        if(piece == null || getPieceAt(start).COLOR != colors[turn % 2] || !validateMove(start, target)) {
             return false;
+        }
+        if(getPieceAt(start) instanceof Pawn) {
+            ((Pawn) piece).iterateMovesCounter();
         }
 
         //move and maybe take piece

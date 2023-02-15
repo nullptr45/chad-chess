@@ -2,6 +2,7 @@ package com.goofygoobers.chadchess.logic.pieces;
 
 import com.goofygoobers.chadchess.logic.ChessBoard;
 import com.goofygoobers.chadchess.logic.Color;
+import com.goofygoobers.chadchess.logic.SpecialMove;
 import com.goofygoobers.chadchess.logic.V2;
 
 import java.util.ArrayList;
@@ -13,10 +14,13 @@ public abstract class Piece {
     public abstract ArrayList<V2> getValidMoves();
     public abstract ArrayList<V2> getValidAttackMoves();
 
-    public abstract boolean goesStraigt();
+    public abstract boolean goesStraight();
     public abstract boolean goesDiagonally();
 
-    public boolean validateSpecial(V2 start, V2 end, ChessBoard board) {
+    public SpecialMove validateSpecial(V2 start, V2 target, ChessBoard board) {
+        return null;
+    }
+    public boolean doSpecial(V2 start, V2 target, ChessBoard board, SpecialMove type) {
         return false;
     }
 
@@ -46,7 +50,7 @@ public abstract class Piece {
         boolean isValidStraight = false;
         boolean isValidDiagonal = false;
         try {
-            if(isStraight && goesStraigt()) {
+            if(isStraight && goesStraight()) {
                 isValidStraight = !board.hasPieceInStraightRange(start, target);
             }
             if(isDiagonal && goesDiagonally()) {
@@ -73,10 +77,6 @@ public abstract class Piece {
             } else {
                 isValid = isValidStraight || isValidDiagonal;
             }
-        }
-
-        if(validateSpecial(start, target, board)) {
-            isValid = true;
         }
 
         return isValid;

@@ -23,7 +23,7 @@ public class Rook extends Piece{
         return moves;
     }
 
-    public boolean goesStraigt() {
+    public boolean goesStraight() {
         return true;
     }
 

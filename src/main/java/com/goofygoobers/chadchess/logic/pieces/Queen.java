@@ -23,7 +23,7 @@ public class Queen extends Piece{
         return moves;
     }
 
-    public boolean goesStraigt() {
+    public boolean goesStraight() {
         return true;
     }
 
