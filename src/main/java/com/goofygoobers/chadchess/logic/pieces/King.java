@@ -54,9 +54,11 @@ public class King extends Piece{
         SpecialMove type = null;
 
         if(board.getPieceAt(target) instanceof Rook) {
-            if(!board.hasPieceInStraightRange(start, target)) {
-                if(!board.hasAttackInStraightRange(COLOR == Color.WHITE ? Color.BLACK : Color.WHITE ,start, target)) {
-                    type = SpecialMove.CASTLING;
+            if(getMovesCounter() == 0 && board.getPieceAt(target).getMovesCounter() == 0) {
+                if(!board.hasPieceInStraightRange(start, target)) {
+                    if(!board.hasAttackInStraightRange(COLOR == Color.WHITE ? Color.BLACK : Color.WHITE ,start, target)) {
+                        type = SpecialMove.CASTLING;
+                    }
                 }
             }
         }
