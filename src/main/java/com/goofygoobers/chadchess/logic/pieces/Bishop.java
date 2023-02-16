@@ -33,6 +33,6 @@ public class Bishop extends Piece{
 
     @Override
     public String toString() {
-        return "bishop";
+        return COLOR == Color.WHITE ? "white/" +  "bishop" : "black/" +  "bishop";
     }
 }

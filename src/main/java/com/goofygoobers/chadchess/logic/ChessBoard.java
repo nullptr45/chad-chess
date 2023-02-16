@@ -174,11 +174,23 @@ public class ChessBoard {
 
     @Override
     public String toString() {
-        String string = "";
-        for(Piece[] x : board) {
-            string += Arrays.toString(x);
+        String string = "[";
+        for(int i = 0; i < SIZE; i++) {
+            Piece[] x = board[i];
+            string += "[";
+            for(int j = 0; j < SIZE; j++) {
+                Piece p = x[j];
+
+                if(p != null) {
+                    string += "\"" + p.toString() + "\"";
+                } else {
+                    string += "null";
+                }
+                string += j < SIZE - 1 ? "," : "";
+            }
+            string += i < SIZE - 1 ? "]," : "]";
         }
 
-        return string;
+        return string + "]";
     }
 }

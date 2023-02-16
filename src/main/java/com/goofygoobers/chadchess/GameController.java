@@ -31,7 +31,7 @@ public class GameController {
         return ChadchessApplication.getBoards().get(Integer.valueOf(id)).move(start, target);
     }
 
-    @RequestMapping(value = "/getBoard", method = RequestMethod.GET)
+    @RequestMapping(value = "/getboard", method = RequestMethod.GET)
     @ResponseBody
     public ChessBoard getBoard(@RequestParam("id") int id) {
         ChessBoardWrapper board;

@@ -79,6 +79,6 @@ public class Pawn extends Piece {
 
     @Override
     public String toString() {
-        return "pawn";
+        return COLOR == Color.WHITE ? "white/" +  "pawn" : "black/" +  "pawn";
     }
 }

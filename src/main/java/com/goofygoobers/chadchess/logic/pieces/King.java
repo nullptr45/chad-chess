@@ -68,6 +68,6 @@ public class King extends Piece{
 
     @Override
     public String toString() {
-        return "king";
+        return COLOR == Color.WHITE ? "white/" +  "king" : "black/" +  "king";
     }
 }

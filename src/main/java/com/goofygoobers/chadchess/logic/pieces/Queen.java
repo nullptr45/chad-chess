@@ -33,6 +33,6 @@ public class Queen extends Piece{
 
     @Override
     public String toString() {
-        return "queen";
+        return COLOR == Color.WHITE ? "white/" +  "queen" : "black/" +  "queen";
     }
 }
