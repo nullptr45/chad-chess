@@ -7,18 +7,10 @@ import com.goofygoobers.chadchess.logic.V2;
 
 import java.util.ArrayList;
 
-public class Pawn extends Piece{
-    private int movesCounter = 0;
+public class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);
-    }
-
-    public int getMovesCounter() {
-        return movesCounter;
-    }
-    public void iterateMovesCounter() {
-        movesCounter++;
     }
 
     public ArrayList<V2> getValidMoves() {

@@ -58,9 +58,8 @@ public class ChessBoard {
         if(piece == null || getPieceAt(start).COLOR != colors[turn % 2] || !validateMove(start, target)) {
             return false;
         }
-        if(getPieceAt(start) instanceof Pawn) {
-            ((Pawn) piece).iterateMovesCounter();
-        }
+
+        piece.iterateMovesCounter();
 
         //move and maybe take piece
         setPiece(target, getPieceAt(start));
@@ -86,20 +85,36 @@ public class ChessBoard {
         return getPieceAt(pos) != null;
     }
 
-    public boolean hasPieceInStraightRange(V2 start, V2 target) throws Exception {
+    public boolean hasPieceInStraightRange(V2 start, V2 target) {
         V2 difference = target.subtract(start);
         int dx = difference.getX();
         int dy = difference.getY();
 
-        if((dx != 0 && dy != 0) || (start.equals(target))) {
-            throw new Exception("Not a straight path!");
-        }
         V2 dirrection = new V2(0, (dx + dy)/Math.abs(dx + dy));
 
         for(int i = 1; i < Math.abs(dx+dy); i++) {
             V2 pos = start.add(dirrection.multiply(i));
 
             if(hasPieceAt(pos)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasAttackInStraightRange(Color color, V2 start, V2 target) {
+        V2 difference = target.subtract(start);
+        int dx = difference.getX();
+        int dy = difference.getY();
+        boolean[][] field = findAttackableSquares(color);
+
+        V2 dirrection = new V2(0, (dx + dy)/Math.abs(dx + dy));
+
+        for(int i = 1; i < Math.abs(dx+dy); i++) {
+            V2 pos = start.add(dirrection.multiply(i));
+
+            if(field[pos.getX()][pos.getY()]) {
                 return true;
             }
         }
@@ -126,6 +141,35 @@ public class ChessBoard {
         }
 
         return false;
+    }
+
+    public boolean[][] findAttackableSquares(Color color) {
+        boolean[][] field = new boolean[SIZE][SIZE];
+
+        for(int i = 0; i < SIZE; i++) {
+            for(int j = 0; j < SIZE; j++) {
+
+                fieldloop:
+                for(int x = 0; x < SIZE; x++) {
+                    for(int y = 0; y < SIZE; y++) {
+
+                        Piece piece = getPieceAt(new V2(x, y));
+
+                        if(piece.COLOR == color) {
+                            V2 start = new V2(x, y);
+                            V2 target = new V2(i, j);
+
+                            if(piece.validateAttackVector(start, target, this)) {
+                                field[i][j] = true;
+                                continue fieldloop;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return field;
     }
 
     @Override

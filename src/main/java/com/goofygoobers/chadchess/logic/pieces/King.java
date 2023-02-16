@@ -1,6 +1,8 @@
 package com.goofygoobers.chadchess.logic.pieces;
 
+import com.goofygoobers.chadchess.logic.ChessBoard;
 import com.goofygoobers.chadchess.logic.Color;
+import com.goofygoobers.chadchess.logic.SpecialMove;
 import com.goofygoobers.chadchess.logic.V2;
 
 import java.util.ArrayList;
@@ -45,6 +47,21 @@ public class King extends Piece{
 
     public boolean goesDiagonally() {
         return false;
+    }
+
+    @Override
+    public SpecialMove validateSpecial(V2 start, V2 target, ChessBoard board) {
+        SpecialMove type = null;
+
+        if(board.getPieceAt(target) instanceof Rook) {
+            if(!board.hasPieceInStraightRange(start, target)) {
+                if(!board.hasAttackInStraightRange(COLOR == Color.WHITE ? Color.BLACK : Color.WHITE ,start, target)) {
+                    type = SpecialMove.CASTLING;
+                }
+            }
+        }
+
+        return type;
     }
 
     @Override
