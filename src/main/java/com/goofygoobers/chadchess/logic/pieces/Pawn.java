@@ -46,7 +46,11 @@ public class Pawn extends Piece {
 
         //double
         if(COLOR == Color.WHITE ? start.getY() == 6 : start.getY() == 1) {
-            type = SpecialMove.DOUBLE;
+            if(COLOR == Color.WHITE ? target.getY() == 4 : target.getY() == 3) {
+                if(difference.getX() == 0) {
+                    type = SpecialMove.DOUBLE;
+                }
+            }
         }
 
         //en passant
@@ -73,6 +77,8 @@ public class Pawn extends Piece {
         if(COLOR == Color.WHITE ? target.getY() == 0 : target.getY() == 7) {
             type = SpecialMove.PAWN_PROMOTION;
         }
+
+        System.out.println(type);
 
         return type;
     }

@@ -1,9 +1,12 @@
 package com.goofygoobers.chadchess;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpHeaders;
 
 import com.goofygoobers.chadchess.logic.*;
 /**
@@ -33,8 +36,10 @@ public class GameController {
 
     @RequestMapping(value = "/getboard", method = RequestMethod.GET)
     @ResponseBody
-    public ChessBoard getBoard(@RequestParam("id") int id) {
+    public ResponseEntity<String> getBoard(@RequestParam("id") int id, HttpServletResponse response) {
         ChessBoardWrapper board;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json");
 
         //create new chess board
         if(id == -1) {
@@ -45,7 +50,9 @@ public class GameController {
             board = ChadchessApplication.getBoards().get(Integer.valueOf(id));
         }
 
-        return board;
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(board.toString());
     }
 
     private V2 stringToV2(String str) {

@@ -53,6 +53,10 @@ public class ChessBoard {
         }
     }
 
+    public Piece[][] getBoard() {
+        return board;
+    }
+
     public boolean move(V2 start, V2 target) {
         Piece piece = getPieceAt(start);
         if(piece == null || getPieceAt(start).COLOR != colors[turn % 2] || !validateMove(start, target)) {
@@ -70,6 +74,9 @@ public class ChessBoard {
     }
 
     public boolean validateMove(V2 start, V2 target) {
+        if(getPieceAt(start) == null) {
+            return false;
+        }
         return getPieceAt(start).validateMove(start, target, this);
     }
 
@@ -90,12 +97,14 @@ public class ChessBoard {
         int dx = difference.getX();
         int dy = difference.getY();
 
-        V2 dirrection = new V2(0, (dx + dy)/Math.abs(dx + dy));
+        V2 dirrection = dx == 0 ? new V2(0, dy/Math.abs(dy)) : new V2(dx/Math.abs(dx), 0);
 
         for(int i = 1; i < Math.abs(dx+dy); i++) {
             V2 pos = start.add(dirrection.multiply(i));
 
-            if(hasPieceAt(pos)) {
+            if(pos.getX() >= SIZE || pos.getX() < 0 || pos.getY() >= SIZE || pos.getY() < 0) {
+                break;
+            } else if(hasPieceAt(pos)) {
                 return true;
             }
         }
@@ -109,7 +118,7 @@ public class ChessBoard {
         int dy = difference.getY();
         boolean[][] field = findAttackableSquares(color);
 
-        V2 dirrection = new V2(0, (dx + dy)/Math.abs(dx + dy));
+        V2 dirrection = new V2(dx/Math.abs(dx), dy/Math.abs(dy));
 
         for(int i = 1; i < Math.abs(dx+dy); i++) {
             V2 pos = start.add(dirrection.multiply(i));
@@ -132,7 +141,7 @@ public class ChessBoard {
         }
         V2 dirrection = new V2((dx)/Math.abs(dx), (dy)/Math.abs(dy));
 
-        for(int i = 1; i < dx; i++) {
+        for(int i = 1; i < Math.abs(dx); i++) {
             V2 pos = start.add(dirrection.multiply(i));
 
             if(hasPieceAt(pos)) {

@@ -3,14 +3,22 @@ package com.goofygoobers.chadchess;
 import com.goofygoobers.chadchess.logic.ChessBoard;
 import com.goofygoobers.chadchess.logic.pieces.Piece;
 
-import java.util.Random;
+import java.util.Arrays;
 
 public class ChessBoardWrapper extends ChessBoard {
     public final int ID;
-    public final String JSON_BOARD;
+    public Piece[][] board;
 
     public ChessBoardWrapper(int id) {
         ID = id;
-        JSON_BOARD = super.toString();
+        board = super.getBoard();
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"ID\":" + ID +
+                ", \"board\":" + super.toString() +
+                '}';
     }
 }

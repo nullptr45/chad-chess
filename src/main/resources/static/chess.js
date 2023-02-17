@@ -8,15 +8,21 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 var palette = {
     white: "rgb(250, 240, 230)",
-    black: "rgb(20, 20, 20)"
+    black: "rgb(20, 20, 20)",
+    highlight: "rgb(100, 100, 100, 0.5)"
 };
 var images = new Map();
+var currentMove = {
+    moving: false,
+    startX: 0,
+    startY: 0
+};
 
 function loadPieceImage(src) {
     image = new Image();
     image.src = "/assets/pieces/" + src + ".PNG";
     image.onload = () => {
-        //update();
+        update();
     }
 
     images.set(src, image);
@@ -50,7 +56,7 @@ function update() {
 
             ctx.fillRect(xStart, yStart, squareSize, squareSize);
             if(board.pieces[x][y] != undefined) {
-                ctx.drawImage(images.get(board.pieces[x][y]), xStart, yStart, squareSize, squareSize);    
+                ctx.drawImage(images.get(board.pieces[x][y]), xStart + 5, yStart + 5, squareSize - 10, squareSize - 10);    
             }
 
             count++;
@@ -63,8 +69,19 @@ async function loadBoard(id) {
     tempBoard = await getData('http://localhost:8080/getboard?id=' + id).then((value) => {return value});
     console.log(tempBoard);
     board.id = tempBoard.ID;
-    board.pieces = JSON.parse(tempBoard.JSON_BOARD);
+    board.pieces = tempBoard.board;
     update();
+}
+
+async function validateMove(sx, sy, tx, ty) {
+    result = await getData(`http://localhost:8080/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    return result;
+}
+
+async function move(sx, sy, tx, ty) {
+    result = await getData(`http://localhost:8080/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    loadBoard(board.id);
+    return result;
 }
 
 async function getData(link) {
@@ -78,4 +95,37 @@ async function getData(link) {
     });
 
     return data;
+}
+
+canvas.addEventListener("click", (ev) => {
+    ctx.fillStyle = palette.highlight;
+    x = ~~(ev.offsetX/canvas.offsetWidth*8);
+    y = ~~(ev.offsetY/canvas.offsetHeight*8);
+    
+    if(!currentMove.moving) {
+        highlightMoves(x, y);
+        currentMove.moving = true;
+        currentMove.startX = x;
+        currentMove.startY = y;
+    } else {
+        move(currentMove.startX, currentMove.startY, x, y);
+        currentMove.moving = false;
+    }
+
+
+});
+
+async function highlightMoves(x, y) {
+    var squareSize = canvas.offsetWidth/8;
+    for(i = 0; i < 8; i++) {
+        for(j = 0; j < 8; j++) {
+            if(await validateMove(x, y, i, j)) {
+                //ctx.fillRect(i/8*canvas.offsetWidth, j/8*canvas.offsetHeight, squareSize, squareSize);
+                ctx.beginPath()
+                ctx.arc((i+0.5)/8*canvas.offsetWidth, (j+0.5)/8*canvas.offsetHeight, squareSize*0.4, 0, 2 * Math.PI, false);
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
 }

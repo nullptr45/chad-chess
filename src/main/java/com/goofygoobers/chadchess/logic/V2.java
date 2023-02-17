@@ -65,4 +65,9 @@ public class V2 {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "x:" + x + ", y:" + y;
+    }
 }

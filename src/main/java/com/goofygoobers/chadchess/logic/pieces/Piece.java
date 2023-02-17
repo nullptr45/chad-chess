@@ -51,8 +51,8 @@ public abstract class Piece {
         boolean isValid = false;
         boolean isAttack = board.hasPieceAt(target);
         boolean isValidMove = getValidMoves().contains(difference);
-        boolean isValidAttackMove = getValidAttackMoves().contains(difference);
-        boolean isFriendlyAttack = isValidAttackMove && board.getPieceAt(start).COLOR == board.getPieceAt(target).COLOR;
+        boolean isValidAttackMove = getValidAttackMoves().contains(difference) && board.getPieceAt(target) != null;
+        boolean isFriendlyAttack = (board.getPieceAt(target) != null && board.getPieceAt(start).COLOR == board.getPieceAt(target).COLOR);
         boolean isStraight = difference.getX() == 0 || difference.getY() == 0;
         boolean isDiagonal = Math.abs(difference.getX()) == Math.abs(difference.getY());
         boolean isValidStraight = false;
@@ -67,7 +67,6 @@ public abstract class Piece {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         if(isAttack) {
             if(!isFriendlyAttack) {
