@@ -9,6 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpHeaders;
 
 import com.goofygoobers.chadchess.logic.*;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * GameController
  * The GameController class is in charge of handle HTTP requests from the client
@@ -23,6 +27,21 @@ public class GameController {
         V2 target = stringToV2(targetStr);
 
         return ChadchessApplication.getBoards().get(Integer.valueOf(id)).validateMove(start, target);
+    }
+
+    @RequestMapping(value = "/getvalidmoves", method = RequestMethod.GET)
+    @ResponseBody
+    public V2[] getValidMoves(@RequestParam("id") int id, @RequestParam("s") String startStr) {
+        V2 start = stringToV2(startStr);
+        LinkedList<V2> validMovedList = ChadchessApplication.getBoards().get(Integer.valueOf(id)).getValidMoves(start);
+        V2[] validMovesArr = new V2[validMovedList.size()];
+        Iterator<V2> validMovesListIterator = validMovedList.iterator();
+
+        for(int i = 0; i < validMovesArr.length; i++) {
+            validMovesArr[i] = validMovesListIterator.next();
+        }
+
+        return validMovesArr;
     }
 
     @RequestMapping(value = "/move", method = RequestMethod.GET)

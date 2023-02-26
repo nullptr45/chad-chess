@@ -85,6 +85,13 @@ public abstract class Piece {
             }
         }
 
+        //check for special move
+        SpecialMove specialMove = validateSpecial(start, target, board);
+        if(!isValid && specialMove != null) {
+            isValid = true;
+            doSpecial(start, target, board, specialMove);
+        }
+
         return isValid;
     }
 

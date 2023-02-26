@@ -74,11 +74,9 @@ public class Pawn extends Piece {
         }
 
         //pawn promotion
-        if(COLOR == Color.WHITE ? target.getY() == 0 : target.getY() == 7) {
+        if(COLOR == Color.WHITE ? start.getY() == 1 && target.getY() == 0 : start.getY() == 6 && target.getY() == 7) {
             type = SpecialMove.PAWN_PROMOTION;
         }
-
-        System.out.println(type);
 
         return type;
     }

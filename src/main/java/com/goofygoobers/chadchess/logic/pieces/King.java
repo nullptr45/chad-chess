@@ -35,10 +35,18 @@ public class King extends Piece{
         moves.add( new V2(0, 1) );
         moves.add( new V2(0, -1) );
         moves.add( new V2(-1, 1) );
-        moves.add( new V2(-1, 1) );
-        moves.add( new V2(-1, 1) );
+        moves.add( new V2(-1, 0) );
+        moves.add( new V2(-1, -1) );
 
         return moves;
+    }
+
+    @Override
+    public boolean validateMove(V2 start, V2 target, ChessBoard board) {
+        Color oppositeColor = COLOR == Color.WHITE ? Color.BLACK : Color.WHITE;
+        boolean isInCheck = board.findAttackableSquares(oppositeColor)[target.getX()][target.getY()];
+
+        return super.validateMove(start, target, board) && !isInCheck;
     }
 
     public boolean goesStraight() {

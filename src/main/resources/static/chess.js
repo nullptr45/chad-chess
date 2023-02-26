@@ -66,10 +66,7 @@ function update() {
 }
 
 async function loadBoard(id) {
-    tempBoard = await getData('http://localhost:8080/getboard?id=' + id).then((value) => {return value});
-    console.log(tempBoard);
-    board.id = tempBoard.ID;
-    board.pieces = tempBoard.board;
+    board = await getData('http://localhost:8080/getboard?id=' + id).then((value) => {return value});
     update();
 }
 
@@ -117,15 +114,12 @@ canvas.addEventListener("click", (ev) => {
 
 async function highlightMoves(x, y) {
     var squareSize = canvas.offsetWidth/8;
-    for(i = 0; i < 8; i++) {
-        for(j = 0; j < 8; j++) {
-            if(await validateMove(x, y, i, j)) {
-                //ctx.fillRect(i/8*canvas.offsetWidth, j/8*canvas.offsetHeight, squareSize, squareSize);
-                ctx.beginPath()
-                ctx.arc((i+0.5)/8*canvas.offsetWidth, (j+0.5)/8*canvas.offsetHeight, squareSize*0.4, 0, 2 * Math.PI, false);
-                ctx.fill();
-                ctx.closePath();
-            }
-        }
+    var validMovesArr = await getData(`http://localhost:8080/getvalidmoves?id=${board.id}&s=${x},${y}`);
+    for(validMove of validMovesArr) {
+        ctx.beginPath()
+        ctx.arc((validMove.x+0.5)/8*canvas.offsetWidth, (validMove.y+0.5)/8*canvas.offsetHeight, squareSize*0.4, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.closePath();
     }
+
 }

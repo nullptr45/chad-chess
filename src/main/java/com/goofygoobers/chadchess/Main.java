@@ -18,7 +18,6 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println(board);
             int sx = scn.nextInt();
             int sy = scn.nextInt();
 
