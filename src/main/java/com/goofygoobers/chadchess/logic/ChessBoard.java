@@ -67,15 +67,15 @@ public class ChessBoard {
 
         if(getPieceAt(target) instanceof King) {
             winner = getPieceAt(start).COLOR == Color.WHITE ? "White" : "Black";
-            System.out.println(winner);
         }
 
-        piece.iterateMovesCounter();
+        getPieceAt(start).doSpecial(start, target, this, getPieceAt(start).validateSpecial(start, target, this));
 
         //move and maybe take piece
         setPiece(target, getPieceAt(start));
         setPiece(start, null);
 
+        piece.iterateMovesCounter();
         turn++;
         return true;
     }
@@ -104,7 +104,7 @@ public class ChessBoard {
         return validMoves;
     }
 
-    private void setPiece(V2 pos, Piece piece) {
+    public void setPiece(V2 pos, Piece piece) {
         board[pos.getX()][pos.getY()] = piece;
     }
 

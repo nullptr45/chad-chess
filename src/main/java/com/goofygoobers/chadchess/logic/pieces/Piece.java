@@ -89,7 +89,6 @@ public abstract class Piece {
         SpecialMove specialMove = validateSpecial(start, target, board);
         if(!isValid && specialMove != null) {
             isValid = true;
-            doSpecial(start, target, board, specialMove);
         }
 
         return isValid;

@@ -75,6 +75,27 @@ public class King extends Piece{
     }
 
     @Override
+    public boolean doSpecial(V2 start, V2 target, ChessBoard board, SpecialMove type) {
+        if(type != SpecialMove.CASTLING) {
+            return false;
+        }
+
+        int xDir = (target.getX()-start.getX())/Math.abs(target.getX()-start.getX());
+        V2 kingEnd = new V2(start.getX() + xDir*2, start.getY());
+        V2 rookEnd = new V2(kingEnd.getX() - xDir, start.getY());
+
+        //move pieces
+        board.setPiece(kingEnd, this);
+        board.setPiece(rookEnd, board.getPieceAt(target));
+
+        //remove old pieces
+        board.setPiece(start, null);
+        board.setPiece(target, null);
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return COLOR == Color.WHITE ? "white/" +  "king" : "black/" +  "king";
     }

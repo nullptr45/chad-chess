@@ -48,7 +48,9 @@ public class Pawn extends Piece {
         if(COLOR == Color.WHITE ? start.getY() == 6 : start.getY() == 1) {
             if(COLOR == Color.WHITE ? target.getY() == 4 : target.getY() == 3) {
                 if(difference.getX() == 0) {
-                    type = SpecialMove.DOUBLE;
+                    if(!board.hasPieceAt(target)) {
+                        type = SpecialMove.DOUBLE;
+                    }
                 }
             }
         }
@@ -79,6 +81,27 @@ public class Pawn extends Piece {
         }
 
         return type;
+    }
+
+    @Override
+    public boolean doSpecial(V2 start, V2 target, ChessBoard board, SpecialMove type) {
+        if(type == null) {
+            return false;
+        }
+
+        switch (type) {
+            case DOUBLE:
+                break;
+            case EN_PASSANT:
+                V2 victim = new V2(target.getX(), start.getY());
+                board.setPiece(victim, null);
+                break;
+            case PAWN_PROMOTION:
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     @Override

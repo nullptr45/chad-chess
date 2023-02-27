@@ -19,6 +19,6 @@ public class ChessBoardWrapper extends ChessBoard {
                 "\"id\":" + ID +
                 ", \"pieces\":" + super.toString() +
                 ", \"winner\":\"" + super.getWinner() + "\"" +
-                '}';
+                "}";
     }
 }
