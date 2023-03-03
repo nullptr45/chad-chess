@@ -45,6 +45,10 @@ loadPieceImage("black/king");
 
 
 function update() {
+    if(board.pieces == undefined) {
+        return;
+    }
+
     var count = 0;
     for(x = 0; x < 8; x++) {
         for(y = 0; y < 8; y++) {

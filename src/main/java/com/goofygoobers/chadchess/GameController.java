@@ -55,10 +55,8 @@ public class GameController {
 
     @RequestMapping(value = "/getboard", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> getBoard(@RequestParam("id") int id, HttpServletResponse response) {
+    public ChessBoardWrapper getBoard(@RequestParam("id") int id, HttpServletResponse response) {
         ChessBoardWrapper board;
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
 
         //create new chess board
         if(id == -1) {
@@ -69,9 +67,7 @@ public class GameController {
             board = ChadchessApplication.getBoards().get(Integer.valueOf(id));
         }
 
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(board.toString());
+        return board;
     }
 
     private V2 stringToV2(String str) {
