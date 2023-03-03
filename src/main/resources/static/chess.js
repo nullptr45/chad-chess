@@ -66,17 +66,17 @@ function update() {
 }
 
 async function loadBoard(id) {
-    board = await getData('http://localhost:8080/getboard?id=' + id).then((value) => {return value});
+    board = await getData('/getboard?id=' + id).then((value) => {return value});
     update();
 }
 
 async function validateMove(sx, sy, tx, ty) {
-    result = await getData(`http://localhost:8080/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    result = await getData(`/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
     return result;
 }
 
 async function move(sx, sy, tx, ty) {
-    result = await getData(`http://localhost:8080/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    result = await getData(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
     loadBoard(board.id);
     return result;
 }
@@ -114,7 +114,7 @@ canvas.addEventListener("click", (ev) => {
 
 async function highlightMoves(x, y) {
     var squareSize = canvas.offsetWidth/8;
-    var validMovesArr = await getData(`http://localhost:8080/getvalidmoves?id=${board.id}&s=${x},${y}`);
+    var validMovesArr = await getData(`/getvalidmoves?id=${board.id}&s=${x},${y}`);
     for(validMove of validMovesArr) {
         ctx.beginPath()
         ctx.arc((validMove.x+0.5)/8*canvas.offsetWidth, (validMove.y+0.5)/8*canvas.offsetHeight, squareSize*0.4, 0, 2 * Math.PI, false);

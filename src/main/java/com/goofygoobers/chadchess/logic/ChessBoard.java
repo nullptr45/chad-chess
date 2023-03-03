@@ -123,38 +123,23 @@ public class ChessBoard {
         return getPieceAt(pos) != null;
     }
 
-    public boolean hasPieceInStraightRange(V2 start, V2 target) {
+    public boolean hasPieceInStraightRange(V2 start, V2 target) throws Exception {
         V2 difference = target.subtract(start);
         int dx = difference.getX();
         int dy = difference.getY();
 
-        V2 dirrection = dx == 0 ? new V2(0, dy/Math.abs(dy)) : new V2(dx/Math.abs(dx), 0);
+        V2 direction = dx == 0 ? new V2(0, dy/Math.abs(dy)) : new V2(dx/Math.abs(dx), 0);
+
+        if(direction.getX() != 0 && direction.getY() != 0) {
+            throw new Exception("Not a straight path!");
+        }
 
         for(int i = 1; i < Math.abs(dx+dy); i++) {
-            V2 pos = start.add(dirrection.multiply(i));
+            V2 pos = start.add(direction.multiply(i));
 
             if(pos.getX() >= SIZE || pos.getX() < 0 || pos.getY() >= SIZE || pos.getY() < 0) {
                 break;
             } else if(hasPieceAt(pos)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean hasAttackInStraightRange(Color color, V2 start, V2 target) {
-        V2 difference = target.subtract(start);
-        int dx = difference.getX();
-        int dy = difference.getY();
-        boolean[][] field = findAttackableSquares(color);
-
-        V2 dirrection = dx == 0 ? new V2(0, dy/Math.abs(dy)) : new V2(dx/Math.abs(dx), 0);
-
-        for(int i = 1; i < Math.abs(dx+dy); i++) {
-            V2 pos = start.add(dirrection.multiply(i));
-
-            if(field[pos.getX()][pos.getY()]) {
                 return true;
             }
         }
@@ -170,12 +155,31 @@ public class ChessBoard {
         if((Math.abs(dx) != Math.abs(dy)) || (start.equals(target))) {
             throw new Exception("Not a diagonal path!");
         }
-        V2 dirrection = new V2((dx)/Math.abs(dx), (dy)/Math.abs(dy));
+        V2 direction = new V2((dx)/Math.abs(dx), (dy)/Math.abs(dy));
 
         for(int i = 1; i < Math.abs(dx); i++) {
-            V2 pos = start.add(dirrection.multiply(i));
+            V2 pos = start.add(direction.multiply(i));
 
             if(hasPieceAt(pos)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasAttackInStraightRange(Color color, V2 start, V2 target) {
+        V2 difference = target.subtract(start);
+        int dx = difference.getX();
+        int dy = difference.getY();
+        boolean[][] field = findAttackableSquares(color);
+
+        V2 direction = dx == 0 ? new V2(0, dy/Math.abs(dy)) : new V2(dx/Math.abs(dx), 0);
+
+        for(int i = 1; i < Math.abs(dx+dy); i++) {
+            V2 pos = start.add(direction.multiply(i));
+
+            if(field[pos.getX()][pos.getY()]) {
                 return true;
             }
         }

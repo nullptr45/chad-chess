@@ -37,17 +37,19 @@ public abstract class Piece {
     }
 
     public boolean validateMove(V2 start, V2 target, ChessBoard board) {
-        V2 difference = target.subtract(start);
-
-        if(start.equals(target) || !(target.getX() >= 0 && target.getX() < ChessBoard.SIZE && target.getY() >= 0 && target.getY() < ChessBoard.SIZE)) {
+        boolean inBounds = target.getX() >= 0 && target.getX() < ChessBoard.SIZE && target.getY() >= 0 && target.getY() < ChessBoard.SIZE;
+        if(start.equals(target) || !inBounds) {
             return false;
         }
+
+        V2 difference = target.subtract(start);
 
         //account for pieces being on different sides
         if(COLOR == Color.WHITE) {
             difference.setY(difference.getY() * -1);
         }
 
+        //predefine booleans in variables for better readability
         boolean isValid = false;
         boolean isAttack = board.hasPieceAt(target);
         boolean isValidMove = getValidMoves().contains(difference);
@@ -68,6 +70,7 @@ public abstract class Piece {
             e.printStackTrace();
         }
 
+        //check if move is valid
         if(isAttack) {
             if(!isFriendlyAttack) {
                 if(isValidAttackMove) {
@@ -76,7 +79,6 @@ public abstract class Piece {
                     isValid = isValidStraight || isValidDiagonal;
                 }
             }
-
         } else {
             if(isValidMove) {
                 isValid = true;
