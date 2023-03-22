@@ -1,12 +1,11 @@
-package com.goofygoobers.chadchess;
+package com.goofygoobers.chadchess.web;
+import com.goofygoobers.chadchess.ChessBoardWrapper;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpHeaders;
 
 import com.goofygoobers.chadchess.logic.*;
 
@@ -68,6 +67,15 @@ public class GameController {
         }
 
         return board;
+    }
+
+    //websockets
+    @MessageMapping("/hello/{boardID}")
+    @SendTo("/topic/greetings")
+    public ChessBoardWrapper greeting(int id, @DestinationVariable String boardID) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        System.out.println("ID: " + boardID);
+        return ChadchessApplication.getBoards().get(Integer.valueOf(id));
     }
 
     private V2 stringToV2(String str) {

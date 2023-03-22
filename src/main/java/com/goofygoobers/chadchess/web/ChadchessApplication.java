@@ -1,10 +1,9 @@
-package com.goofygoobers.chadchess;
+package com.goofygoobers.chadchess.web;
 
-import com.goofygoobers.chadchess.logic.ChessBoard;
+import com.goofygoobers.chadchess.ChessBoardWrapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Random;
 
