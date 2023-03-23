@@ -11,6 +11,7 @@ import java.util.Random;
 public class ChadchessApplication {
 
 	private static Hashtable<Integer, ChessBoardWrapper> boards = new Hashtable<>();
+	private static Hashtable<String, ChessBoardWrapper> sessionBoards = new Hashtable<>();
 	private static Random rand = new Random();
 
 	public static void main(String[] args) {
