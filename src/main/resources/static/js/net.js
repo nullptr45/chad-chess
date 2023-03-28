@@ -1,12 +1,13 @@
 var stompClient;
 
-function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+function connect(id) {
+    var socket = new SockJS('/websocket-endpoint');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            console.log('Greeting: ' + greeting);
+        stompClient.subscribe('/board/' + id, function (message) {
+            board = JSON.parse(message.body);
+            update();
         });
     });
 }

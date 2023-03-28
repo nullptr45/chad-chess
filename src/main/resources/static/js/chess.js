@@ -71,6 +71,7 @@ function update() {
 
 async function loadBoard(id) {
     board = await getData('/getboard?id=' + id).then((value) => {return value});
+    connect(board.id);
     update();
 }
 
@@ -80,9 +81,7 @@ async function validateMove(sx, sy, tx, ty) {
 }
 
 async function move(sx, sy, tx, ty) {
-    result = await getData(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
-    loadBoard(board.id);
-    return result;
+    fetch(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
 }
 
 async function getData(link) {
