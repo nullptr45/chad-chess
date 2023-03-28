@@ -45,15 +45,20 @@ public class Pawn extends Piece {
         }
 
         //double
-        if(COLOR == Color.WHITE ? start.getY() == 6 : start.getY() == 1) {
-            if(COLOR == Color.WHITE ? target.getY() == 4 : target.getY() == 3) {
-                if(difference.getX() == 0) {
-                    if(!board.hasPieceAt(target)) {
-                        type = SpecialMove.DOUBLE;
+        try {
+            if(COLOR == Color.WHITE ? start.getY() == 6 : start.getY() == 1) {
+                if(COLOR == Color.WHITE ? target.getY() == 4 : target.getY() == 3) {
+                    if(difference.getX() == 0) {
+                        if(!board.hasPieceAt(target) && !board.hasPieceInStraightRange(start, target)) {
+                            type = SpecialMove.DOUBLE;
+                        }
                     }
                 }
             }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
+
 
         //en passant
         //check if difference is a valid attack
