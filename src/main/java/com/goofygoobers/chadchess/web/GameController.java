@@ -1,12 +1,14 @@
-package com.goofygoobers.chadchess;
+package com.goofygoobers.chadchess.web;
+import com.goofygoobers.chadchess.ChessBoardWrapper;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpHeaders;
 
 import com.goofygoobers.chadchess.logic.*;
 
@@ -19,6 +21,11 @@ import java.util.LinkedList;
  */
 @Controller
 public class GameController {
+
+    @Autowired
+    public SimpMessagingTemplate simpMessagingTemplate;
+
+
 
     @RequestMapping(value = "/validatemove", method = RequestMethod.GET)
     @ResponseBody
@@ -46,19 +53,22 @@ public class GameController {
 
     @RequestMapping(value = "/move", method = RequestMethod.GET)
     @ResponseBody
-    public boolean move(@RequestParam("id") int id, @RequestParam("s") String startStr, @RequestParam("t") String targetStr) {
+    public void move(@RequestParam("id") int id, @RequestParam("s") String startStr, @RequestParam("t") String targetStr) {
         V2 start = stringToV2(startStr);
         V2 target = stringToV2(targetStr);
 
-        return ChadchessApplication.getBoards().get(Integer.valueOf(id)).move(start, target);
+        //move piece
+        ChadchessApplication.getBoards().get(Integer.valueOf(id)).move(start, target);
+
+        //send updated board to players
+        ChessBoardWrapper board = ChadchessApplication.getBoards().get(Integer.valueOf(id));
+        simpMessagingTemplate.convertAndSend("/board/" + id, board);
     }
 
     @RequestMapping(value = "/getboard", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> getBoard(@RequestParam("id") int id, HttpServletResponse response) {
+    public ChessBoardWrapper getBoard(@RequestParam("id") int id, HttpServletResponse response) {
         ChessBoardWrapper board;
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
 
         //create new chess board
         if(id == -1) {
@@ -69,9 +79,7 @@ public class GameController {
             board = ChadchessApplication.getBoards().get(Integer.valueOf(id));
         }
 
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(board.toString());
+        return board;
     }
 
     private V2 stringToV2(String str) {
