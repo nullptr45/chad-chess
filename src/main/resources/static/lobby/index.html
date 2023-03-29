@@ -8,20 +8,19 @@
         <script src="/webjars/jquery/jquery.min.js"></script>
         <script src="/webjars/sockjs-client/sockjs.min.js"></script>
         <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-        <script src="js/net.js"></script>
+        <script src="../js/net.js"></script>
     </head>
 
     <body>
-        <img id="cat" src="assets/me_when_castling.png" />
         <div id="wrapper" >
-            <h1>Chad-Chess</h1>
+            <div id="header-wrapper" >
+                <h1>Current Games</h1>
+            </div>
             <div id="boards" >
-                <div class="board" >
-                    <h2>2066547957</h2>
-                </div>
             </div>    
+            <a id="new-game" class="board" href="/?id=-1" >-> New Game <-</a>
         </div>
 
-        <script src="js/chess.js"></script>
+        <script src="js/lobby.js"></script>
     </body>
 </html>

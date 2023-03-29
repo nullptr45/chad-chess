@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.goofygoobers.chadchess.logic.*;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -80,6 +81,19 @@ public class GameController {
         }
 
         return board;
+    }
+
+    @RequestMapping(value = "/getboards", method = RequestMethod.GET)
+    @ResponseBody
+    public int[] getBoards() {
+        Iterator<Integer> idIterator = ChadchessApplication.getBoards().keys().asIterator();
+        int[] boardsArr = new int[ChadchessApplication.getBoards().size()];
+
+        for(int i = 0; idIterator.hasNext(); i++) {
+            boardsArr[i] = idIterator.next().intValue();
+        }
+
+        return boardsArr;
     }
 
     private V2 stringToV2(String str) {

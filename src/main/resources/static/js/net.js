@@ -7,7 +7,12 @@ function connect(id) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/board/' + id, function (message) {
             board = JSON.parse(message.body);
-            update();
+
+            if(board.winner == undefined) {
+                update();
+            } else {
+                win();
+            }
         });
     });
 }
@@ -18,4 +23,17 @@ function disconnect() {
     }
     setConnected(false);
     console.log("Disconnected");
+}
+
+async function getData(link) {
+    var data;
+
+    await fetch(link)
+    .then((response) => {
+        data = response.json();
+    }).then((data) => {
+        returnBoard = data;
+    });
+
+    return data;
 }

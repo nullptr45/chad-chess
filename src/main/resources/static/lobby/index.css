@@ -1,44 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+:root {
+    --white: #faf0e6;
+    --black: #141414;
+}
+
 body, html {
     margin: 0px;
     height: 100%;
     width: 100%;
     font-family: 'Press Start 2P', cursive;
+    background-color: #9e5050;
 }
 
 #wrapper {
-    height: 100%;
+    height: max-content;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    background-color: #9e5050;
+    padding-bottom: 5em;
 }
 
 #wrapper h1 {
     font-family: 'Press Start 2P', cursive;
     color: white;
-    text-shadow: 5px 5px black;
-}
-
-#cat {
-    position: absolute;
-    right: 5em;
-    bottom: 0px;
-    height: 10em;
+    text-shadow: 5px 5px var(--black);
 }
 
 #boards {
-    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0em 0em 4em 0em;
 }
 
-.board {
-    padding: 1em;
-    background-color: rgb(250, 240, 230);
+.board:visited {
+    color: var(--black);
 }
 
 .board h2 {
     margin: 0px;
+}
+
+.board {
+    font-size: 1.5em;
+    transition: all 200ms;
+    padding: 0.7em;
+    border: var(--black) solid 0.2em;
+    background-color: var(--white);
+    box-shadow: #2c2b2b 0.4em 0.4em;
+    position: relative;
+    margin: 0.7em;
+    text-decoration: none;
+}
+
+#new-game {
+    background-color: #c7eb88;
+}
+
+.board:hover {
+    translate: 0.2em 0.2em;
+    box-shadow: var(--black) 0.2em 0.2em;
+    background-color: #cdc5bc;
 }

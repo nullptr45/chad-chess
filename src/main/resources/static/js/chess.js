@@ -1,9 +1,15 @@
-var canvas = document.getElementById("chess-board");
 var board = {};
-loadBoard(-1);
+
+//load board
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+loadBoard(urlParams.get('id'));
+
+//set up canvas
+const canvas = document.getElementById("chess-board");
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
-var ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 ctx.webkitImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 var palette = {
@@ -69,8 +75,14 @@ function update() {
     }
 }
 
+function win() {
+    canvas.remove();
+    document.querySelector('#canvas-wrapper h1').textContent = board.winner + ' Won!'
+}
+
 async function loadBoard(id) {
     board = await getData('/getboard?id=' + id).then((value) => {return value});
+    window.history.pushState('page1', 'Title', '/?id=' + board.id);
     connect(board.id);
     update();
 }
@@ -82,19 +94,6 @@ async function validateMove(sx, sy, tx, ty) {
 
 async function move(sx, sy, tx, ty) {
     fetch(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
-}
-
-async function getData(link) {
-    var data;
-
-    await fetch(link)
-    .then((response) => {
-        data = response.json();
-    }).then((data) => {
-        returnBoard = data;
-    });
-
-    return data;
 }
 
 canvas.addEventListener("click", (ev) => {
