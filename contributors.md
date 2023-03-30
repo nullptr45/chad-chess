@@ -3,4 +3,4 @@
 * Sebastian
 
 # Other Contributors:
-* Taras
+* Taras 'The Rizzler' Sozanskyi
