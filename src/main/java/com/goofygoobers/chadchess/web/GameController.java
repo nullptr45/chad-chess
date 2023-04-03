@@ -1,18 +1,16 @@
 package com.goofygoobers.chadchess.web;
+
 import com.goofygoobers.chadchess.ChessBoardWrapper;
+import com.goofygoobers.chadchess.user.User;
+import com.goofygoobers.chadchess.user.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import com.goofygoobers.chadchess.logic.*;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -24,9 +22,9 @@ import java.util.LinkedList;
 public class GameController {
 
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     public SimpMessagingTemplate simpMessagingTemplate;
-
-
 
     @RequestMapping(value = "/validatemove", method = RequestMethod.GET)
     @ResponseBody
@@ -37,6 +35,25 @@ public class GameController {
         return ChadchessApplication.getBoards().get(Integer.valueOf(id)).validateMove(start, target);
     }
 
+    @PostMapping(path = "/add") // Map ONLY POST Requests
+    public @ResponseBody String addNewUser(@RequestParam String name
+            , @RequestParam String email) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        User n = new User();
+        n.setName(name);
+        n.setEmail(email);
+        userRepository.save(n);
+        return "Saved";
+    }
+
+    @GetMapping(path = "/all")
+    public @ResponseBody Iterable<User> getAllUsers() {
+        // This returns a JSON or XML with the users
+        return userRepository.findAll();
+    }
+
     @RequestMapping(value = "/getvalidmoves", method = RequestMethod.GET)
     @ResponseBody
     public V2[] getValidMoves(@RequestParam("id") int id, @RequestParam("s") String startStr) {
@@ -45,7 +62,7 @@ public class GameController {
         V2[] validMovesArr = new V2[validMovedList.size()];
         Iterator<V2> validMovesListIterator = validMovedList.iterator();
 
-        for(int i = 0; i < validMovesArr.length; i++) {
+        for (int i = 0; i < validMovesArr.length; i++) {
             validMovesArr[i] = validMovesListIterator.next();
         }
 
@@ -72,7 +89,7 @@ public class GameController {
         ChessBoardWrapper board;
 
         //create new chess board
-        if(id == -1) {
+        if (id == -1) {
             id = ChadchessApplication.getRand().nextInt(Integer.MAX_VALUE);
             board = new ChessBoardWrapper(id);
             ChadchessApplication.getBoards().put(Integer.valueOf(id), board);
@@ -89,7 +106,7 @@ public class GameController {
         Iterator<Integer> idIterator = ChadchessApplication.getBoards().keys().asIterator();
         int[] boardsArr = new int[ChadchessApplication.getBoards().size()];
 
-        for(int i = 0; idIterator.hasNext(); i++) {
+        for (int i = 0; idIterator.hasNext(); i++) {
             boardsArr[i] = idIterator.next().intValue();
         }
 
