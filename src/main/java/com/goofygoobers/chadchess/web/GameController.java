@@ -35,7 +35,7 @@ public class GameController {
         return ChadchessApplication.getBoards().get(Integer.valueOf(id)).validateMove(start, target);
     }
 
-    @PostMapping(path = "/add") // Map ONLY POST Requests
+    @PostMapping(path = "/registerUser") // Map ONLY POST Requests
     public @ResponseBody String addNewUser(@RequestParam String name
             , @RequestParam String email) {
         // @ResponseBody means the returned String is the response, not a view name
@@ -48,6 +48,7 @@ public class GameController {
         return "Saved";
     }
 
+    //TODO: i don't think we can use an Iterable on the front end
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
