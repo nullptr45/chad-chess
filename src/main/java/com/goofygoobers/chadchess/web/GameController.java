@@ -35,7 +35,8 @@ public class GameController {
         return ChadchessApplication.getBoards().get(Integer.valueOf(id)).validateMove(start, target);
     }
 
-    @PostMapping(path = "/registerUser") // Map ONLY POST Requests
+    //TODO: remap this to use POST the way it's meant to be used
+    @GetMapping(path = "/registeruser") // Map ONLY GET Requests
     public @ResponseBody String addNewUser(@RequestParam String name
             , @RequestParam String email) {
         // @ResponseBody means the returned String is the response, not a view name
