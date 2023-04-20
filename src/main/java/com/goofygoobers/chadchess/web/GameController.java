@@ -1,5 +1,9 @@
 package com.goofygoobers.chadchess.web;
+
 import com.goofygoobers.chadchess.ChessBoardWrapper;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -12,9 +16,8 @@ import org.springframework.stereotype.Controller;
 
 import com.goofygoobers.chadchess.logic.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * GameController
@@ -26,7 +29,29 @@ public class GameController {
     @Autowired
     public SimpMessagingTemplate simpMessagingTemplate;
 
+    @RequestMapping(value = "/register-user", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
+        ChadchessApplication.addUser(username, password);
+        return true;
+    }
 
+    @RequestMapping(value = "/list-users", method = RequestMethod.GET)
+    @ResponseBody
+    public String listUsers() throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> query =
+                ChadchessApplication.getDb().collection("users").whereGreaterThan("id", -1).get();
+        QuerySnapshot querySnapshot = query.get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+
+        StringBuilder result = new StringBuilder("{\n");
+
+        for (QueryDocumentSnapshot document : documents) {
+            result.append(document.getString("username") + ",\n");
+        }
+
+        return result + "\n}";
+    }
 
     @RequestMapping(value = "/validatemove", method = RequestMethod.GET)
     @ResponseBody
@@ -45,7 +70,7 @@ public class GameController {
         V2[] validMovesArr = new V2[validMovedList.size()];
         Iterator<V2> validMovesListIterator = validMovedList.iterator();
 
-        for(int i = 0; i < validMovesArr.length; i++) {
+        for (int i = 0; i < validMovesArr.length; i++) {
             validMovesArr[i] = validMovesListIterator.next();
         }
 
@@ -72,7 +97,7 @@ public class GameController {
         ChessBoardWrapper board;
 
         //create new chess board
-        if(id == -1) {
+        if (id == -1) {
             id = ChadchessApplication.getRand().nextInt(Integer.MAX_VALUE);
             board = new ChessBoardWrapper(id);
             ChadchessApplication.getBoards().put(Integer.valueOf(id), board);
@@ -89,7 +114,7 @@ public class GameController {
         Iterator<Integer> idIterator = ChadchessApplication.getBoards().keys().asIterator();
         int[] boardsArr = new int[ChadchessApplication.getBoards().size()];
 
-        for(int i = 0; idIterator.hasNext(); i++) {
+        for (int i = 0; idIterator.hasNext(); i++) {
             boardsArr[i] = idIterator.next().intValue();
         }
 
