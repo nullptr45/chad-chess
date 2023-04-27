@@ -40,6 +40,18 @@ public class ChadchessApplication {
         ApiFuture<WriteResult> result = docRef.set(data);
     }
 
+    public static int addMatch(int hostID) {
+        int id = rand.nextInt(Integer.MAX_VALUE);
+        DocumentReference docRef = db.collection("active-games").document(String.valueOf(id));
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", id);
+        data.put("player1", hostID);
+        data.put("player2", -1);
+        data.put("state", new ChessBoardWrapper(id).toString());
+        ApiFuture<WriteResult> result = docRef.set(data);
+        return 0;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(ChadchessApplication.class, args);
     }

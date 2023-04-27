@@ -47,10 +47,21 @@ public class GameController {
         StringBuilder result = new StringBuilder("{\n");
 
         for (QueryDocumentSnapshot document : documents) {
-            result.append(document.getString("username") + ",\n");
+            result.append(document.getString("username")).append(",\n");
         }
 
         return result + "\n}";
+    }
+
+    @RequestMapping(value = "/get-user-stat", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserStat(@RequestParam("id") int id, @RequestParam("atrr-name") String attr) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> query =
+                ChadchessApplication.getDb().collection("users").whereEqualTo("id", id).get();
+        QuerySnapshot querySnapshot = query.get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+
+        return documents.get(0).getString(attr);
     }
 
     @RequestMapping(value = "/validatemove", method = RequestMethod.GET)
