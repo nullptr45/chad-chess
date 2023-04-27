@@ -26,7 +26,7 @@ var currentMove = {
 
 function loadPieceImage(src) {
     image = new Image();
-    image.src = "/assets/pieces/" + src + ".PNG";
+    image.src = "../assets/pieces/" + src + ".PNG";
     image.onload = () => {
         update();
     }
