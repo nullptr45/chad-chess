@@ -82,7 +82,7 @@ function win() {
 
 async function loadBoard(id) {
     board = await getData('/getboard?id=' + id).then((value) => {return value});
-    window.history.pushState('page1', 'Title', '/?id=' + board.id);
+    window.history.pushState('page1', 'Title', '/game/index.html?id=' + board.id);
     connect(board.id);
     update();
 }

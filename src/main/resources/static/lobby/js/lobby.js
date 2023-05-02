@@ -11,6 +11,6 @@ async function loadBoards() {
     const boards = document.getElementById('boards');
 
     for(i = 0; i < idArr.length; i++) {
-        boards.innerHTML += `<a class="board" href="/game/index.html?id=${idArr[i]}" >${idArr[i]}</a>`;
+        boards.innerHTML += `<a class="btn8" href="/game/index.html?id=${idArr[i]}" >${idArr[i]}</a>`;
     }
 }
