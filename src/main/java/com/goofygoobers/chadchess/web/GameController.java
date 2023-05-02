@@ -1,7 +1,9 @@
 package com.goofygoobers.chadchess.web;
 
 import com.goofygoobers.chadchess.ChessBoardWrapper;
+import com.goofygoobers.chadchess.User;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,9 +33,25 @@ public class GameController {
 
     @RequestMapping(value = "/register-user", method = RequestMethod.GET)
     @ResponseBody
-    public boolean registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
-        ChadchessApplication.addUser(username, password);
-        return true;
+    public int registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
+        return ChadchessApplication.addUser(username, password);
+    }
+
+    @RequestMapping(value = "/get-user", method = RequestMethod.GET)
+    @ResponseBody
+    public User getUser(@RequestParam("id") int id) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> query =
+                ChadchessApplication.getDb().collection("users").whereEqualTo("id", id).get();
+        QuerySnapshot querySnapshot = query.get();
+
+        QueryDocumentSnapshot userData = querySnapshot.getDocuments().get(0);
+        User result = new User();
+
+        result.setBio(userData.getString("bio"));
+        result.setPfp(userData.getString("pfp"));
+        result.setName(userData.getString("username"));
+
+        return result;
     }
 
     @RequestMapping(value = "/list-users", method = RequestMethod.GET)
@@ -51,17 +69,6 @@ public class GameController {
         }
 
         return result + "\n}";
-    }
-
-    @RequestMapping(value = "/get-user-stat", method = RequestMethod.GET)
-    @ResponseBody
-    public String getUserStat(@RequestParam("id") int id, @RequestParam("atrr-name") String attr) throws ExecutionException, InterruptedException {
-        ApiFuture<QuerySnapshot> query =
-                ChadchessApplication.getDb().collection("users").whereEqualTo("id", id).get();
-        QuerySnapshot querySnapshot = query.get();
-        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-
-        return documents.get(0).getString(attr);
     }
 
     @RequestMapping(value = "/validatemove", method = RequestMethod.GET)
