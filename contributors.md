@@ -1,6 +1,6 @@
 # Cool People Who Worked On This:
 * Nick 'Eh' Papirakis
-* Sebastian 'Seabass' Thorstensen
+* Peter 'Big Chief' Sokolov
 
 # Other Contributors:
 * Taras 'The Rizzler' Sozanskyi
