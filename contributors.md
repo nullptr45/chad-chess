@@ -3,4 +3,4 @@
 * Peter 'Big Chief' Sokolov
 
 # Other Contributors:
-* Taras 'The Rizzler' Sozanskyi
+* Taras 'The Rizzard of Oz' Sozanskyi
