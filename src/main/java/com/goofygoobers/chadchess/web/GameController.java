@@ -28,15 +28,19 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class GameController {
 
+    // TODO: Add more attributes for users (date created, etc)
     @Autowired
     public SimpMessagingTemplate simpMessagingTemplate;
 
+    // NOTE: curl "http://localhost:8080/register-user?username=demo&password=password"
     @RequestMapping(value = "/register-user", method = RequestMethod.GET)
     @ResponseBody
     public int registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
         return ChadchessApplication.addUser(username, password);
     }
 
+    // NOTE: Returns an object, not a string
+    // TODO: Make a demo working in terminal. Need a solution to show functionality without Taras.
     @RequestMapping(value = "/get-user", method = RequestMethod.GET)
     @ResponseBody
     public User getUser(@RequestParam("id") int id) throws ExecutionException, InterruptedException {
@@ -111,7 +115,7 @@ public class GameController {
 
     @RequestMapping(value = "/getboard", method = RequestMethod.GET)
     @ResponseBody
-    public ChessBoardWrapper getBoard(@RequestParam("id") int id, HttpServletResponse response) {
+    public ChessBoardWrapper getBoard(@RequestParam("id") int id, @RequestParam("player") int player, HttpServletResponse response) {
         ChessBoardWrapper board;
 
         //create new chess board

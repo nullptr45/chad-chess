@@ -8,7 +8,7 @@ function connect(id) {
         stompClient.subscribe('/board/' + id, function (message) {
             board = JSON.parse(message.body);
 
-            if(board.winner == undefined) {
+            if(board.winner === undefined) {
                 update();
             } else {
                 win();

@@ -11,6 +11,23 @@ import java.util.Arrays;
 public class ChessBoardWrapper extends ChessBoard {
     @JsonProperty("id")
     public final int ID;
+    private int whiteID, blackID;
+
+    public int getWhiteID() {
+        return whiteID;
+    }
+
+    public void setWhiteID(int whiteID) {
+        this.whiteID = whiteID;
+    }
+
+    public int getBlackID() {
+        return blackID;
+    }
+
+    public void setBlackID(int blackID) {
+        this.blackID = blackID;
+    }
 
     public ChessBoardWrapper(int id) {
         ID = id;
@@ -21,9 +38,9 @@ public class ChessBoardWrapper extends ChessBoard {
         String[][] strPieces = new String[SIZE][SIZE];
         Piece[][] pieces = super.getBoard();
 
-        for(int x = 0; x < SIZE; x++) {
-            for(int y = 0; y < SIZE; y++) {
-                if(pieces[x][y] != null) {
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                if (pieces[x][y] != null) {
                     strPieces[x][y] = pieces[x][y].toString();
                 } else {
                     strPieces[x][y] = null;
