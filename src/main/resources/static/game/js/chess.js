@@ -26,7 +26,7 @@ var currentMove = {
 
 function loadPieceImage(src) {
     image = new Image();
-    image.src = "/assets/pieces/" + src + ".PNG";
+    image.src = "../assets/pieces/" + src + ".PNG";
     image.onload = () => {
         update();
     }
@@ -51,7 +51,7 @@ loadPieceImage("black/king");
 
 
 function update() {
-    if(board.pieces == undefined) {
+    if(board.pieces === undefined) {
         return;
     }
 
@@ -65,7 +65,7 @@ function update() {
             var squareSize = canvas.offsetWidth/8;
 
             ctx.fillRect(xStart, yStart, squareSize, squareSize);
-            if(board.pieces[x][y] != undefined) {
+            if(board.pieces[x][y] !== undefined) {
                 ctx.drawImage(images.get(board.pieces[x][y]), xStart + 5, yStart + 5, squareSize - 10, squareSize - 10);    
             }
 
@@ -82,7 +82,7 @@ function win() {
 
 async function loadBoard(id) {
     board = await getData('/getboard?id=' + id).then((value) => {return value});
-    window.history.pushState('page1', 'Title', '/?id=' + board.id);
+    window.history.pushState('page1', 'Title', '/game/index.html?id=' + board.id);
     connect(board.id);
     update();
 }

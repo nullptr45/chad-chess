@@ -5,11 +5,12 @@ function joinBoard(ev) {
 }
 
 async function loadBoards() {
-    var idArr = await getData('/getboards').then((value) => {return value});
+    var response = await fetch('/getboards');
+    var idArr = await response.json();
     idArr.sort();
     const boards = document.getElementById('boards');
 
     for(i = 0; i < idArr.length; i++) {
-        boards.innerHTML += `<a class="board" href="/?id=${idArr[i]}" >${idArr[i]}</a>`;
+        boards.innerHTML += `<a class="btn8" href="/game/index.html?id=${idArr[i]}" >${idArr[i]}</a>`;
     }
 }

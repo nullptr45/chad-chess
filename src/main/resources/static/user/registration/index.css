@@ -2,28 +2,24 @@ body, html {
     margin: 0px;
     height: 100%;
     width: 100%;
-    font-family: 'Press Start 2P', cursive;
     background-color: var(--red);
+    display: flex;
+    align-items: center;
 }
 
 #wrapper {
-    height: calc(100% - 5em);
+    height: max-content;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     padding-bottom: 5em;
 }
 
-#boards {
+#inputs {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     margin: 0em 0em 4em 0em;
-}
-
-.board h2 {
-    margin: 0px;
 }
