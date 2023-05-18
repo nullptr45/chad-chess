@@ -55,7 +55,6 @@ public class ChadchessApplication {
     }
 
     public static void main(String[] args) {
-        System.out.println("Delete this bozo");
         SpringApplication.run(ChadchessApplication.class, args);
     }
 

@@ -3,4 +3,4 @@
 * Peter 'Big Chief' Sokolov
 
 # Other Contributors:
-* Taras 'The Moron' Sozanskyi
+* Taras 'The rizzler' Sozanskyi
