@@ -3,4 +3,4 @@
 * Sebastian 'Seabass' Thorstensen
 
 # Other Contributors:
-* Taras 'The Rizzler' Sozanskyi
+* Taras 'The Moron' Sozanskyi
