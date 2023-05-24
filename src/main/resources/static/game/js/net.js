@@ -28,12 +28,7 @@ function disconnect() {
 async function getData(link) {
     var data;
 
-    await fetch(link)
-    .then((response) => {
-        data = response.json();
-    }).then((data) => {
-        returnBoard = data;
-    });
+    data = (await fetch(link)).json()
 
     return data;
 }

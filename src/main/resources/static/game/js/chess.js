@@ -81,19 +81,20 @@ function win() {
 }
 
 async function loadBoard(id) {
-    board = await getData('/getboard?id=' + id).then((value) => {return value});
+    board = await getData('/getboard?id=' + id);
+    console.log(board);
     window.history.pushState('page1', 'Title', '/game/index.html?id=' + board.id);
     connect(board.id);
     update();
 }
 
 async function validateMove(sx, sy, tx, ty) {
-    result = await getData(`/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    result = await getData(`/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`);
     return result;
 }
 
 async function move(sx, sy, tx, ty) {
-    fetch(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    fetch(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`);
 }
 
 canvas.addEventListener("click", (ev) => {
