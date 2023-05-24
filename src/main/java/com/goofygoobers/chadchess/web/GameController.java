@@ -1,22 +1,23 @@
 package com.goofygoobers.chadchess.web;
 
 import com.goofygoobers.chadchess.ChessBoardWrapper;
+import com.goofygoobers.chadchess.User;
+import com.goofygoobers.chadchess.logic.V2;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.goofygoobers.chadchess.logic.*;
-
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -26,14 +27,34 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class GameController {
 
+    // TODO: Add more attributes for users (date created, etc)
     @Autowired
     public SimpMessagingTemplate simpMessagingTemplate;
 
+    // NOTE: curl "http://localhost:8080/register-user?username=demo&password=password"
     @RequestMapping(value = "/register-user", method = RequestMethod.GET)
     @ResponseBody
-    public boolean registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
-        ChadchessApplication.addUser(username, password);
-        return true;
+    public int registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
+        return ChadchessApplication.addUser(username, password);
+    }
+
+    // NOTE: Returns an object, not a string
+    // TODO: Make a demo working in terminal. Need a solution to show functionality without Taras.
+    @RequestMapping(value = "/get-user", method = RequestMethod.GET)
+    @ResponseBody
+    public User getUser(@RequestParam("id") int id) throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> query =
+                ChadchessApplication.getDb().collection("users").whereEqualTo("id", id).get();
+        QuerySnapshot querySnapshot = query.get();
+
+        QueryDocumentSnapshot userData = querySnapshot.getDocuments().get(0);
+        User result = new User();
+
+        result.setBio(userData.getString("bio"));
+        result.setPfp(userData.getString("pfp"));
+        result.setName(userData.getString("username"));
+
+        return result;
     }
 
     @RequestMapping(value = "/list-users", method = RequestMethod.GET)
@@ -51,17 +72,6 @@ public class GameController {
         }
 
         return result + "\n}";
-    }
-
-    @RequestMapping(value = "/get-user-stat", method = RequestMethod.GET)
-    @ResponseBody
-    public String getUserStat(@RequestParam("id") int id, @RequestParam("atrr-name") String attr) throws ExecutionException, InterruptedException {
-        ApiFuture<QuerySnapshot> query =
-                ChadchessApplication.getDb().collection("users").whereEqualTo("id", id).get();
-        QuerySnapshot querySnapshot = query.get();
-        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-
-        return documents.get(0).getString(attr);
     }
 
     @RequestMapping(value = "/validatemove", method = RequestMethod.GET)
@@ -104,7 +114,7 @@ public class GameController {
 
     @RequestMapping(value = "/getboard", method = RequestMethod.GET)
     @ResponseBody
-    public ChessBoardWrapper getBoard(@RequestParam("id") int id, HttpServletResponse response) {
+    public ChessBoardWrapper getBoard(@RequestParam("id") int id, @RequestParam("player") int player, HttpServletResponse response) {
         ChessBoardWrapper board;
 
         //create new chess board

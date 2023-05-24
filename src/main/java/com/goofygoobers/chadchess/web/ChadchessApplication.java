@@ -31,13 +31,15 @@ public class ChadchessApplication {
         return db;
     }
 
-    public static void addUser(String username, String password) throws Exception {
+    public static int addUser(String username, String password) throws Exception {
         DocumentReference docRef = db.collection("users").document(username);
         Map<String, Object> data = new HashMap<>();
+        int id = rand.nextInt(Integer.MAX_VALUE);
         data.put("username", username);
         data.put("password", password);
-        data.put("id", rand.nextInt(Integer.MAX_VALUE));
+        data.put("id", id);
         ApiFuture<WriteResult> result = docRef.set(data);
+        return id;
     }
 
     public static int addMatch(int hostID) {
@@ -53,6 +55,7 @@ public class ChadchessApplication {
     }
 
     public static void main(String[] args) {
+        System.out.println("Delete this bozo");
         SpringApplication.run(ChadchessApplication.class, args);
     }
 

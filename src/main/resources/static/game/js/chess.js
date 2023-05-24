@@ -51,7 +51,7 @@ loadPieceImage("black/king");
 
 
 function update() {
-    if(board.pieces == undefined) {
+    if(board.pieces === undefined) {
         return;
     }
 
@@ -65,7 +65,7 @@ function update() {
             var squareSize = canvas.offsetWidth/8;
 
             ctx.fillRect(xStart, yStart, squareSize, squareSize);
-            if(board.pieces[x][y] != undefined) {
+            if(board.pieces[x][y] !== undefined) {
                 ctx.drawImage(images.get(board.pieces[x][y]), xStart + 5, yStart + 5, squareSize - 10, squareSize - 10);    
             }
 
