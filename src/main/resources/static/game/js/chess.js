@@ -65,7 +65,7 @@ function update() {
             var squareSize = canvas.offsetWidth/8;
 
             ctx.fillRect(xStart, yStart, squareSize, squareSize);
-            if(board.pieces[x][y] !== undefined) {
+            if(board.pieces[x][y] !== null) {
                 ctx.drawImage(images.get(board.pieces[x][y]), xStart + 5, yStart + 5, squareSize - 10, squareSize - 10);    
             }
 
@@ -81,7 +81,7 @@ function win() {
 }
 
 async function loadBoard(id) {
-    board = await getData('/getboard?id=' + id);
+    board = await getData('/getboard?id=' + id + '&player=1');
     console.log(board);
     window.history.pushState('page1', 'Title', '/game/index.html?id=' + board.id);
     connect(board.id);
