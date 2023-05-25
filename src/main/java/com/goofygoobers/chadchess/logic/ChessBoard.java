@@ -130,10 +130,12 @@ public class ChessBoard {
 
         V2 direction = dx == 0 ? new V2(0, dy/Math.abs(dy)) : new V2(dx/Math.abs(dx), 0);
 
+        //check if the path is straight
         if(direction.getX() != 0 && direction.getY() != 0) {
             throw new Exception("Not a straight path!");
         }
 
+        //check if the path contains a piece
         for(int i = 1; i < Math.abs(dx+dy); i++) {
             V2 pos = start.add(direction.multiply(i));
 
@@ -152,11 +154,13 @@ public class ChessBoard {
         int dx = difference.getX();
         int dy = difference.getY();
 
+        //check if the path is diagonal
         if((Math.abs(dx) != Math.abs(dy)) || (start.equals(target))) {
             throw new Exception("Not a diagonal path!");
         }
         V2 direction = new V2((dx)/Math.abs(dx), (dy)/Math.abs(dy));
 
+        //check if the path contains a piece
         for(int i = 1; i < Math.abs(dx); i++) {
             V2 pos = start.add(direction.multiply(i));
 
@@ -190,13 +194,16 @@ public class ChessBoard {
     public boolean[][] findAttackableSquares(Color color) {
         boolean[][] field = new boolean[SIZE][SIZE];
 
+        //loop through fields
+        fieldLoop:
         for(int i = 0; i < SIZE; i++) {
             for(int j = 0; j < SIZE; j++) {
 
-                fieldloop:
+                //loop through pieces
                 for(int x = 0; x < SIZE; x++) {
                     for(int y = 0; y < SIZE; y++) {
 
+                        //check if piece can attack field
                         Piece piece = getPieceAt(new V2(x, y));
 
                         if(piece != null && piece.COLOR == color) {
@@ -205,21 +212,13 @@ public class ChessBoard {
 
                             if(piece.validateAttackVector(start, target, this)) {
                                 field[i][j] = true;
-                                continue fieldloop;
+                                continue fieldLoop;
                             }
                         }
                     }
                 }
             }
         }
-//
-//        for(int y = 0; y < SIZE; y++) {
-//            System.out.print(y + "  |");
-//            for(int x = 0; x < SIZE; x++) {
-//                System.out.print( field[x][y] ? "@   " : "_   " );
-//            }
-//            System.out.println();
-//        }
 
         return field;
     }
