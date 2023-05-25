@@ -38,7 +38,20 @@ public class ChadchessApplication {
         data.put("username", username);
         data.put("password", password);
         data.put("id", id);
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("wins", 0);
+        stats.put("losses", 0);
+        data.put("stats", stats);
         ApiFuture<WriteResult> result = docRef.set(data);
+        return id;
+    }
+
+    public static int updateUser(String username, String attr, String value) throws Exception {
+        DocumentReference docRef = db.collection("users").document(username);
+        Map<String, Object> data = new HashMap<>();
+        int id = rand.nextInt(Integer.MAX_VALUE);
+        data.put(attr, value);
+        ApiFuture<WriteResult> result = docRef.update(data);
         return id;
     }
 

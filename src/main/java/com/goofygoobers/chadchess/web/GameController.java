@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class GameController {
 
-    // TODO: Add more attributes for users (date created, etc)
+    // TODO: Authentication and session IDs
     @Autowired
     public SimpMessagingTemplate simpMessagingTemplate;
 
@@ -36,6 +36,17 @@ public class GameController {
     @ResponseBody
     public int registerUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
         return ChadchessApplication.addUser(username, password);
+    }
+
+    @RequestMapping(value = "/set-user-stat", method = RequestMethod.GET)
+    public int setUserStat(@RequestParam("id") int id, @RequestParam("attr") String attr, @RequestParam("value") String value)
+            throws Exception {
+        ApiFuture<QuerySnapshot> query =
+                ChadchessApplication.getDb().collection("users").whereEqualTo("id", id).get();
+        QuerySnapshot querySnapshot = query.get();
+        QueryDocumentSnapshot userData = querySnapshot.getDocuments().get(0);
+
+        return ChadchessApplication.updateUser(userData.getString("username"), attr, value);
     }
 
     // NOTE: Returns an object, not a string
@@ -65,10 +76,10 @@ public class GameController {
         QuerySnapshot querySnapshot = query.get();
         List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
 
-        StringBuilder result = new StringBuilder("{\n");
+        StringBuilder result = new StringBuilder("{");
 
         for (QueryDocumentSnapshot document : documents) {
-            result.append(document.getString("username")).append(",\n");
+            result.append(document.getString("username")).append(",");
         }
 
         return result + "\n}";
