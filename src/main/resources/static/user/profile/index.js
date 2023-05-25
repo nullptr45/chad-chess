@@ -1,52 +1,21 @@
 var username = document.getElementById('username');
 var bio = document.getElementById('bio');
-var profile = document.getElementById("pp");
-var user = {
-    name: "Peter the second",
-    bio: 'big thick boy',
-    stats: {
-        wins: 99,
-        losses: 5
-    }
-}
+var pfp = document.getElementById("img");
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 
-
-const users = [
-    {
-        name: "Peter the zeroth",
-        bio: 'big thick boy',
-        stats: {
-            wins: 99,
-            losses: 5
-        }
-    }
-    ,
-    {
-        name: "Peter the first",
-        bio: 'big thick boy',
-        stats: {
-            wins: 99,
-            losses: 5
-        }
-    }
-    ,
-    {
-        name: "Peter the second",
-        bio: 'big thick boy',
-        stats: {
-            wins: 99,
-            losses: 5
-        }
-    }
-];
-
-username.innerText = users[id].name;
-bio.innerText = users[id].bio;
-
-function getUser() {
-
+async function getUser() {
+    user = await (await fetch(`/get-user?id=${id}`)).json();
+    return user;
 }
+
+async function loadUser(id) {
+    user = await (await fetch(`/get-user?id=${id}`)).json();
+    username.innerText = user.name;
+    bio.innerText = user.bio;
+    pfp.src = user.pfp;
+}
+
+loadUser(id);
