@@ -65,7 +65,7 @@ function update() {
             var squareSize = canvas.offsetWidth/8;
 
             ctx.fillRect(xStart, yStart, squareSize, squareSize);
-            if(board.pieces[x][y] !== undefined) {
+            if(board.pieces[x][y] !== null) {
                 ctx.drawImage(images.get(board.pieces[x][y]), xStart + 5, yStart + 5, squareSize - 10, squareSize - 10);    
             }
 
@@ -81,19 +81,20 @@ function win() {
 }
 
 async function loadBoard(id) {
-    board = await getData('/getboard?id=' + id).then((value) => {return value});
+    board = await getData('/getboard?id=' + id + '&player=1');
+    console.log(board);
     window.history.pushState('page1', 'Title', '/game/index.html?id=' + board.id);
     connect(board.id);
     update();
 }
 
 async function validateMove(sx, sy, tx, ty) {
-    result = await getData(`/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    result = await getData(`/validatemove?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`);
     return result;
 }
 
 async function move(sx, sy, tx, ty) {
-    fetch(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`).then((value) => {return value});
+    fetch(`/move?id=${board.id}&s=${sx},${sy}&t=${tx},${ty}`);
 }
 
 canvas.addEventListener("click", (ev) => {

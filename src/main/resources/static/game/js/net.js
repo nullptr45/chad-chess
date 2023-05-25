@@ -8,7 +8,7 @@ function connect(id) {
         stompClient.subscribe('/board/' + id, function (message) {
             board = JSON.parse(message.body);
 
-            if(board.winner === undefined) {
+            if(board.winner === null) {
                 update();
             } else {
                 win();
@@ -28,12 +28,7 @@ function disconnect() {
 async function getData(link) {
     var data;
 
-    await fetch(link)
-    .then((response) => {
-        data = response.json();
-    }).then((data) => {
-        returnBoard = data;
-    });
+    data = (await fetch(link)).json()
 
     return data;
 }
