@@ -14,8 +14,8 @@ ui.buttons.signUp.addEventListener("click", (ev) => {
     
     //build and send request to sign up
     const id = await (await fetch(`/register-user?username=${username}&password=${password}`)).json()
-    console.log(id);
-    
+    window.location.href = `${window.location.origin}/user/profile/index.html?id=${id}`;
+
 });
 
 
