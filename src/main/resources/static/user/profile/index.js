@@ -6,10 +6,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 
-async function getUser() {
-    user = await (await fetch(`/get-user?id=${id}`)).json();
-    return user;
-}
+
 
 async function loadUser(id) {
     user = await (await fetch(`/get-user?id=${id}`)).json();
