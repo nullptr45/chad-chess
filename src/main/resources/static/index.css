@@ -1,7 +1,8 @@
 
 body{
-    background-color: coral;
+    background-color: var(--red);
     margin: 0em;
+    padding-top: 1em;
 }
 
 #header {
@@ -24,6 +25,7 @@ body{
 
 #description {
     margin:auto;
+    font-size: 1em;
 }
 #desc-wrap{
     height: 100vh;
